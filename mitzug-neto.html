@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="pics/logo.svg"/>
+  <title>מיזוג נטו | מתקין מזגנים מומחה ומכירת מזגני VRF של כל המותגים</title>
+  <meta name="description" content="מיזוג נטו בהנהלת בני (052-8815133) - מתקין מזגנים מומחה. שירות מקצועי של מכירת והתקנת מזגני VRF וכל סוגי המיזוג של כל המותגים המובילים בישראל."/>
+  <meta name="keywords" content="מתקין מזגנים, מכירת מזגנים, מזגני VRF, טכנאי מזגנים, התקנת VRF, בני הדר"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:        #0a84d0;
+      --blue-mid:    #38b6ff;
+      --blue-light:  #7dd8ff;
+      --blue-pale:   #e0f5ff;
+      --green:       #0caa6e;
+      --green-light: #34d399;
+      --green-pale:  #d1fae5;
+      --navy:        #0c2340;
+      --navy-mid:    #1e4060;
+      --text:        #1a3a55;
+      --muted:       #5a7a96;
+      --white:       #ffffff;
+      --bg:          #f0fbff;
+      --bg2:         #e8f6fd;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 3px; }
+
+    /* ═══ CANVAS BG ═══ */
+    #bg-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(240,251,255,0.75);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border-bottom: 1px solid rgba(56,182,255,0.2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 48px;
+      box-shadow: 0 4px 24px rgba(10,132,208,0.08);
+    }
+    .nav-logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .nav-logo-svg { flex-shrink: 0; }
+    .nav-title { font-size: 1.25rem; font-weight: 800; color: var(--navy); }
+    .nav-sub    { font-size: 0.72rem; color: var(--green); font-weight: 500; margin-top: 2px; }
+
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul a {
+      color: var(--navy-mid); text-decoration: none;
+      font-size: 0.92rem; font-weight: 600;
+      transition: color 0.2s; position: relative;
+    }
+    nav ul a::after {
+      content: ''; position: absolute; bottom: -4px; right: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      transition: width 0.3s;
+    }
+    nav ul a:hover { color: var(--blue); }
+    nav ul a:hover::after { width: 100%; }
+
+    /* hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--navy); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(240,251,255,0.98);
+      backdrop-filter: blur(28px);
+      border-bottom: 1px solid rgba(56,182,255,0.15);
+      z-index: 999; flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--navy); text-decoration: none;
+      font-size: 1.05rem; font-weight: 600; padding: 18px 28px;
+      border-bottom: 1px solid rgba(10,132,208,0.08);
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+    /* logo recreation */
+    .logo-wrap {
+      display: inline-flex; flex-direction: column; align-items: center;
+      margin-bottom: 36px;
+      filter: drop-shadow(0 0 24px rgba(67,160,71,0.4)) drop-shadow(0 0 48px rgba(21,101,192,0.3));
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    /* glowing tag line */
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(12,170,110,0.35);
+      border-radius: 50px; padding: 6px 20px;
+      font-size: 0.85rem; color: var(--green);
+      letter-spacing: 0.06em; font-weight: 700;
+      margin-bottom: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(12,170,110,0.15);
+      animation: pulseTag 3s ease-in-out infinite;
+    }
+    @keyframes pulseTag {
+      0%,100% { box-shadow: 0 2px 12px rgba(12,170,110,0.15); }
+      50%      { box-shadow: 0 2px 20px rgba(12,170,110,0.3); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 900; line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero p {
+      font-size: 1.15rem; color: var(--navy-mid);
+      max-width: 580px; margin: 0 auto 36px; line-height: 1.7;
+    }
+
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block; padding: 14px 38px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: var(--white); font-weight: 700; font-size: 1rem;
+      border-radius: 50px; text-decoration: none; border: none; cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      box-shadow: 0 6px 28px rgba(10,132,208,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(10,132,208,0.45); }
+    .btn-primary:hover::after { opacity: 1; }
+
+    .btn-ghost {
+      display: inline-block; padding: 14px 38px;
+      background: rgba(255,255,255,0.55);
+      border: 1.5px solid rgba(10,132,208,0.3);
+      color: var(--blue); font-weight: 700; font-size: 1rem;
+      border-radius: 50px; text-decoration: none; cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      backdrop-filter: blur(12px);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.8); border-color: var(--blue); transform: translateY(-3px); }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-hint svg { opacity: 0.4; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ═══ STATS ═══ */
+    .stats {
+      position: relative; z-index: 2;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(56,182,255,0.2);
+      border-bottom: 1px solid rgba(56,182,255,0.2);
+      padding: 48px 24px;
+    }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    }
+    .stat {
+      text-align: center; padding: 16px;
+      border-left: 1px solid rgba(10,132,208,0.12);
+    }
+    .stat:last-child { border-left: none; }
+    .stat-num {
+      font-size: 2.8rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .stat-num.pop-in {
+      animation: statPop 0.5s cubic-bezier(.22,.68,0,1.4) both;
+    }
+    @keyframes statPop {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .stat-label { font-size: 0.88rem; color: var(--muted); margin-top: 6px; font-weight: 500; }
+
+    /* ═══ SECTIONS ═══ */
+    section { position: relative; z-index: 2; padding: 96px 24px; }
+
+    .section-label {
+      text-align: center; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.12em; color: var(--green);
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-title { text-align: center; margin-bottom: 64px; }
+    .section-title h2 {
+      font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 800;
+      color: var(--navy);
+    }
+    .section-title p {
+      margin-top: 12px; font-size: 1rem; color: var(--muted); max-width: 500px; margin-inline: auto;
+    }
+    .section-line {
+      width: 60px; height: 3px; margin: 14px auto 0;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      border-radius: 3px;
+    }
+
+    /* ═══ SERVICES ═══ */
+    .services { background: var(--bg2); }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(56,182,255,0.18);
+      border-top: 1px solid rgba(255,255,255,0.95);
+      border-radius: 20px; padding: 32px 26px;
+      transition: transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden; cursor: default;
+      box-shadow: 0 4px 20px rgba(10,132,208,0.07);
+    }
+    .card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue-mid), var(--green-light), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(10,132,208,0.05), transparent 70%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: rgba(10,132,208,0.25);
+      box-shadow: 0 20px 48px rgba(10,132,208,0.15), 0 0 0 1px rgba(10,132,208,0.1);
+    }
+    .card:hover::before, .card:hover::after { opacity: 1; }
+    .card-icon-wrap {
+      width: 60px; height: 60px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue-pale), var(--green-pale));
+      border: 1px solid rgba(56,182,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(10,132,208,0.12);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover .card-icon-wrap { transform: scale(1.1) rotate(-4deg); box-shadow: 0 8px 24px rgba(10,132,208,0.2); }
+    .card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .card p  { font-size: 0.92rem; color: var(--muted); line-height: 1.65; }
+
+    /* ═══ WHY US ═══ */
+    .why { background: var(--bg); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 20px; max-width: 960px; margin: 0 auto;
+    }
+    .why-item {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56,182,255,0.2);
+      border-radius: 18px; padding: 28px 20px; text-align: center;
+      box-shadow: 0 4px 16px rgba(10,132,208,0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+    }
+    .why-item:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(10,132,208,0.14); }
+    .why-badge {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 18px rgba(10,132,208,0.28);
+      font-size: 1.5rem; font-weight: 900; color: #fff;
+      line-height: 1;
+    }
+    .why-body { text-align: center; }
+    .why-body h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .why-body p  { font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+
+    /* ═══ MARQUEE ═══ */
+    .clients {
+      background: var(--bg); border-top: 1px solid rgba(10,132,208,0.08); border-bottom: 1px solid rgba(10,132,208,0.08);
+      padding: 36px 0 20px; overflow: hidden; position: relative; z-index: 2;
+    }
+    .clients::before, .clients::after {
+      content: ''; position: absolute; top: 0; width: 80px; height: 100%; z-index: 2; pointer-events: none;
+    }
+    .clients::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .clients::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+    
+    .marquee {
+      display: flex; width: max-content;
+      animation: scrollMarquee 30s linear infinite;
+    }
+    .marquee:hover { animation-play-state: paused; }
+    
+    .marquee-content { display: flex; gap: 80px; padding: 0 40px; align-items: center; }
+    .marquee-item {
+      font-size: 1.5rem; font-weight: 900; color: var(--navy);
+      opacity: 0.45; transition: opacity 0.3s, transform 0.3s, color 0.3s;
+      white-space: nowrap; letter-spacing: 0.05em; font-family: 'Heebo', sans-serif;
+    }
+    .marquee-item:hover { opacity: 1; transform: scale(1.08); color: var(--blue); }
+    
+    @keyframes scrollMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(50%); } 
+    }
+    @media(max-width: 600px) {
+      .marquee-item { font-size: 1.2rem; }
+      .marquee-content { gap: 50px; padding: 0 25px; }
+    }
+
+    /* ═══ ABOUT BENNY ═══ */
+    .about { background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(240,251,255,0.8) 100%); position: relative; }
+    .about::before { content: ''; position: absolute; top:0; left:0; width:100%; height:1px; background: linear-gradient(90deg, transparent, rgba(10,132,208,0.2), transparent); }
+    .about-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: row-reverse; gap: 48px; align-items: center; flex-wrap: wrap; }
+    .about-text { flex: 1.5; min-width: 320px; }
+    .about-text h2 { font-size: clamp(1.8rem,4vw,2.5rem); font-weight: 900; color: var(--navy); margin-bottom: 16px; }
+    .about-text h2 span { background: linear-gradient(135deg, var(--blue), var(--green)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .about-text p { font-size: 1.1rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .about-text ul { list-style: none; padding: 0; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .about-text li { font-size: 0.95rem; color: var(--navy-mid); font-weight: 600; position: relative; padding-right: 24px; }
+    .about-text li::before { content: '✓'; position: absolute; right: 0; color: var(--green); font-weight: 900; font-size: 1.1rem; }
+    .about-sig { font-family: 'Heebo', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--blue); transform: rotate(-2deg); display: inline-block; margin-top: 10px; }
+    .about-img { flex: 1; min-width: 300px; position: relative; }
+    .about-img-box {
+      width: 100%; aspect-ratio: 4/5; border-radius: 24px;
+      background: linear-gradient(135deg, var(--blue-mid), var(--green-light));
+      padding: 4px; box-shadow: 0 20px 48px rgba(10,132,208,0.15);
+      transform: rotate(2deg); transition: transform 0.4s;
+    }
+    .about-img-box:hover { transform: rotate(0deg) scale(1.02); }
+    .about-img-inner {
+      width: 100%; height: 100%; border-radius: 20px;
+      background: var(--bg2); border: 2px solid #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--navy); text-align: center; padding: 0; overflow: hidden; position: relative;
+    }
+
+    /* ═══ PROCESS ═══ */
+    .process { background: var(--bg2); }
+    .process-steps {
+      max-width: 760px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 0; position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute;
+      right: 23px; top: 24px; bottom: 24px; width: 2px;
+      background: linear-gradient(180deg, var(--blue), var(--green-light), transparent);
+    }
+    .step { display: flex; align-items: flex-start; gap: 20px; padding: 20px 0; }
+    .step-num {
+      flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.1rem; color: white;
+      box-shadow: 0 0 0 4px rgba(10,132,208,0.15), 0 4px 16px rgba(10,132,208,0.25);
+      position: relative; z-index: 1;
+    }
+    .step-body { padding-top: 10px; }
+    .step-body h4 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .step-body p  { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ═══ CONTACT ═══ */
+    .contact {
+      background: linear-gradient(160deg, var(--blue-pale), var(--green-pale));
+      border-top: 1px solid rgba(56,182,255,0.2);
+    }
+    form {
+      max-width: 580px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 16px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(56,182,255,0.25);
+      border-top: 1px solid rgba(255,255,255,0.95);
+      border-radius: 24px; padding: 36px 32px;
+      box-shadow: 0 20px 64px rgba(10,132,208,0.12);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 0.85rem; color: var(--navy-mid); font-weight: 600; }
+    .field input, .field textarea, .field select {
+      background: rgba(255,255,255,0.8);
+      border: 1.5px solid rgba(56,182,255,0.25);
+      border-radius: 12px; padding: 12px 16px;
+      color: var(--navy); font-family: 'Heebo', sans-serif;
+      font-size: 0.97rem; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 0.7; }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: var(--blue-mid);
+      box-shadow: 0 0 0 3px rgba(56,182,255,0.15);
+    }
+    .field textarea { resize: vertical; min-height: 100px; }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾'; position: absolute;
+      left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); pointer-events: none;
+    }
+    .field select { appearance: none; -webkit-appearance: none; width: 100%; cursor: pointer; padding-left: 36px; }
+    .field select option { background: #fff; color: var(--navy); }
+    .submit-btn {
+      padding: 14px; border: none; cursor: pointer;
+      border-radius: 50px; font-family: 'Heebo', sans-serif;
+      font-size: 1.05rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: var(--white);
+      box-shadow: 0 6px 28px rgba(10,132,208,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .submit-btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(10,132,208,0.42); }
+    .submit-btn:hover::after { opacity: 1; }
+    .success-msg {
+      display: none; text-align: center;
+      background: rgba(12,170,110,0.1); border: 1px solid rgba(12,170,110,0.35);
+      border-radius: 12px; padding: 18px; color: var(--green);
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      position: relative; z-index: 2;
+      background: var(--navy); border-top: 1px solid rgba(56,182,255,0.15);
+      text-align: center; padding: 28px 24px;
+      color: rgba(255,255,255,0.45); font-size: 0.82rem;
+    }
+    footer strong { color: rgba(255,255,255,0.75); }
+
+    /* ═══ SCROLL REVEAL ═══ */
+    /* Default: everything visible. JS adds .js-ready to body to enable animations */
+    .js-ready .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .js-ready .reveal.visible { opacity: 1; transform: none; }
+    .js-ready .step {
+      opacity: 0; transform: translateX(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .js-ready .step.visible { opacity: 1; transform: none; }
+
+    /* ═══ GALLERY ═══ */
+    .gallery { background: var(--bg2); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+      box-shadow: 0 4px 20px rgba(10,132,208,0.1);
+      transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s;
+      border: 1px solid rgba(56,182,255,0.15);
+    }
+    .gallery-item:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(10,132,208,0.2);
+    }
+    .gallery-item.gallery-wide { grid-column: span 2; aspect-ratio: 16/9; }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,35,64,0.7) 0%, rgba(10,35,64,0.1) 55%, transparent 100%);
+      display: flex; align-items: flex-end;
+      padding: 18px 20px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span {
+      color: #fff; font-weight: 700; font-size: 0.92rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    /* Placeholder slot */
+    .gallery-ph {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+    }
+    .gallery-ph-1 { background: linear-gradient(135deg,#b8e4ff,#cdf5e8); }
+    .gallery-ph-2 { background: linear-gradient(135deg,#d0eeff,#b8f0d8); }
+    .gallery-ph-3 { background: linear-gradient(135deg,#c5e8fb,#d8f5e8); }
+    .gallery-ph-4 { background: linear-gradient(135deg,#bfe2ff,#c5f0df); }
+    .gallery-ph-5 { background: linear-gradient(135deg,#cbeeff,#cef5e8); }
+    .gallery-ph-icon { font-size: 2.6rem; }
+    .gallery-ph-label { font-size: 0.85rem; color: var(--navy-mid); font-weight: 600; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,35,64,0.92);
+      backdrop-filter: blur(8px);
+      z-index: 9000;
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 88vh; border-radius: 12px; object-fit: contain; }
+    .lightbox-close {
+      position: absolute; top: 20px; left: 20px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 1.5rem; width: 40px; height: 40px;
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+    /* ═══ GLITCH EFFECT on logo text ═══ */
+    @keyframes glitch {
+      0%,90%,100% { clip-path: none; transform: none; }
+      92% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translateX(-3px); }
+      94% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translateX(3px); }
+      96% { clip-path: none; transform: none; }
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media(max-width: 768px) {
+      nav { padding: 12px 20px; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+      .stat { border-left: none; border-bottom: 1px solid rgba(10,132,208,0.12); }
+      .stat:nth-child(odd) { border-left: 1px solid rgba(10,132,208,0.12); }
+      form { padding: 24px 18px; }
+    }
+    @media(max-width: 600px) {
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 0.98rem; }
+      .cards { grid-template-columns: 1fr; gap: 16px; }
+      .why-grid { grid-template-columns: 1fr; gap: 14px; }
+      .why-item { flex-direction: row; text-align: right; padding: 18px; gap: 18px; }
+      .why-badge { width: 56px; height: 56px; font-size: 1.2rem; flex-shrink: 0; }
+      .why-body { text-align: right; }
+      .form-row { grid-template-columns: 1fr; }
+      section { padding: 64px 16px; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+      .process-steps::before { right: 23px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.gallery-wide { grid-column: span 1; aspect-ratio: 16/9; }
+    }
+    @media(min-width:601px) and (max-width:900px) {
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-item.gallery-wide { grid-column: span 2; }
+    }
+    @media(max-width: 380px) {
+      .hero h1 { font-size: 1.7rem; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo-wrap">
+    <!-- Real Logo -->
+    <img src="pics/short logo.svg" alt="מיזוג נטו לוגו" height="44" class="nav-logo-svg">
+    <div>
+      <div class="nav-title">מיזוג נטו</div>
+      <div class="nav-sub">רשת סוכנים למיזוג אוויר</div>
+    </div>
+  </div>
+  <ul>
+    <li><a href="#services">שירותים</a></li>
+    <li><a href="#why">למה אנחנו</a></li>
+    <li><a href="#about">מי אני</a></li>
+    <li><a href="#gallery">גלריה</a></li>
+    <li><a href="#process">תהליך</a></li>
+    <li><a href="#contact">צור קשר</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMenu()">שירותים</a>
+  <a href="#why"      onclick="closeMenu()">למה אנחנו</a>
+  <a href="#about"    onclick="closeMenu()">מי אני</a>
+  <a href="#gallery"  onclick="closeMenu()">גלריה</a>
+  <a href="#process"  onclick="closeMenu()">תהליך</a>
+  <a href="#contact"  onclick="closeMenu()">צור קשר</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+
+    <!-- Logo recreation -->
+    <div class="logo-wrap">
+      <img src="pics/full logo.svg" alt="מיזוג נטו - מתקין מזגנים מומחה" height="150" style="margin-bottom: 12px; filter: drop-shadow(0 0 24px rgba(67,160,71,0.4)) drop-shadow(0 0 48px rgba(21,101,192,0.3));">
+      <div style="font-size:0.8rem;color:#5a7a96;letter-spacing:0.08em;margin-top:6px;">רשת סוכנים למיזוג אוויר • בני הדר</div>
+    </div>
+
+    <div class="hero-tag">⚡ מומחי מיזוג אוויר מאז 1994</div>
+    <h1>מתקין מזגנים מומחה<br/>ומכירת מערכות <span>VRF</span> של כל המותגים</h1>
+    <p>מעל 30 שנות ניסיון כמתקין מזגנים מקצועי בתכנון, התקנה ואבחון מערכות מיזוג אוויר לאנשים פרטיים, עסקים ומגדלים. מתמחים במכירת מערכות VRF של כל המותגים – הכל תחת קורת גג אחת.</p>
+
+    <div class="hero-btns">
+      <a href="https://wa.me/972528815133?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%91%D7%A0%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%95%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%99%D7%96%D7%95%D7%92%20%D7%90%D7%95%D7%95%D7%99%D7%A8." target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px;"><img src="pics/whatsapp-svgrepo-com.svg" alt="" width="22" height="22" style="position: relative; z-index: 1;">קבל הצעת מחיר בוואטסאפ</a>
+      <a href="#services" class="btn-ghost">הכירו את השירותים</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="20" height="30" viewBox="0 0 20 30"><rect x="7" y="0" width="6" height="18" rx="3" fill="none" stroke="white" stroke-width="1.5"/><circle cx="10" cy="6" r="2" fill="white"><animate attributeName="cy" values="6;14;6" dur="1.6s" repeatCount="indefinite"/></circle></svg>
+    גלול למטה
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num" data-target="30">30+</div>
+      <div class="stat-label">שנות ניסיון</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="1500">1500+</div>
+      <div class="stat-label">פרויקטים הושלמו</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="98">98%</div>
+      <div class="stat-label">% שביעות רצון</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="24">24/7</div>
+      <div class="stat-label">שעות תגובה</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CLIENTS MARQUEE ═══ -->
+<div class="clients">
+  <div class="section-label" style="text-align: center; margin-bottom: 24px;">החברות שכבר בחרו בנו</div>
+  <div class="marquee">
+    <div class="marquee-content">
+      <div class="marquee-item">RENUAR רנואר</div>
+      <div class="marquee-item">CASTRO קאסטרו</div>
+      <div class="marquee-item">הפועל באר שבע ⚽</div>
+      <div class="marquee-item">רשת FOX</div>
+      <div class="marquee-item">אלקטרה ELECTRA</div>
+      <div class="marquee-item">קבוצת עזריאלי</div>
+      <div class="marquee-item">רשות שדות התעופה</div>
+    </div>
+    <div class="marquee-content">
+      <div class="marquee-item">RENUAR רנואר</div>
+      <div class="marquee-item">CASTRO קאסטרו</div>
+      <div class="marquee-item">הפועל באר שבע ⚽</div>
+      <div class="marquee-item">רשת FOX</div>
+      <div class="marquee-item">אלקטרה ELECTRA</div>
+      <div class="marquee-item">קבוצת עזריאלי</div>
+      <div class="marquee-item">רשות שדות התעופה</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services" id="services">
+  <div class="section-label">השירותים שלנו</div>
+  <div class="section-title reveal">
+    <h2>פתרון מלא למיזוג אוויר</h2>
+    <p>מתכנון ועד התקנה, מאבחון ועד ייעוץ – הכל אצלנו</p>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards">
+    <div class="card reveal">
+      <div class="card-icon-wrap">❄️</div>
+      <h3>התקנת מערכות VRF מתקדמות</h3>
+      <p>מומחים בהתקנת מערכות VRF (Variable Refrigerant Flow) – הטכנולוגיה המתקדמת ביותר לבניינים מסחריים ומגורים גדולים, עם בקרה מרכזית וחיסכון אנרגטי מקסימלי.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon-wrap">🔧</div>
+      <h3>תכנון מערכות מיזוג אישי</h3>
+      <p>תכנון מותאם אישית לכל סוג נכס – דירה, בית פרטי, משרד או מפעל. אנו מתכננים את המערכת האידיאלית שתתאים לצרכים שלך תוך אופטימיזציה של עלויות.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon-wrap">🔍</div>
+      <h3>איתור תקלות ואבחון מקצועי</h3>
+      <p>צוות הטכנאים שלנו מאובזר בציוד אבחון מתקדם לאיתור תקלות מהיר ומדויק. תיקון בביקור אחד ברוב המקרים – ללא עיכובים ומבלי להפריע לשגרה שלך.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon-wrap">🏗️</div>
+      <h3>ביצוע עבודות גבס</h3>
+      <p>שילוב מלא של עבודות גבס בתהליך ההתקנה – הסתרת צינורות, בניית מסגרות ותיעול אסתטי מושלם. הכל בביצוע אחד, נקי ומקצועי ללא קבלנים נוספים.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon-wrap">📋</div>
+      <h3>ייעוץ מקצועי וליווי</h3>
+      <p>ייעוץ מלא לאורך כל הפרויקט – מבחירת הציוד הנכון, דרך תכנון, התקנה ועד הדרכה על השימוש. אנו לצדך מהרגע הראשון ועד שנים קדימה.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon-wrap">⚡</div>
+      <h3>מערכות לחיסכון באנרגיה</h3>
+      <p>התקנת מערכות Inverter ומחוללי חום מהדור החדש עם דירוג A+++. חיסכון של עד 50% בחשמל לעומת מערכות ישנות – השקעה שמחזירה את עצמה.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY US ═══ -->
+<section class="why" id="why">
+  <div class="section-label">למה לבחור בנו</div>
+  <div class="section-title reveal">
+    <h2>למה מיזוג נטו?</h2>
+    <p>ניסיון, מקצועיות ואמינות שאפשר לסמוך עליהם</p>
+    <div class="section-line"></div>
+  </div>
+  <div class="why-grid">
+    <div class="why-item reveal">
+      <div class="why-badge">30+</div>
+      <div class="why-body">
+        <h4>שנות ניסיון</h4>
+        <p>פעילים בתחום המיזוג מאז 1994</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-badge">VRF</div>
+      <div class="why-body">
+        <h4>מומחי VRF</h4>
+        <p>מוסמכים להתקנת המערכות המתקדמות ביותר</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-badge">1</div>
+      <div class="why-body">
+        <h4>קבלן אחד</h4>
+        <p>מיזוג + גבס + ייעוץ – הכל אצלנו</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-badge">✓</div>
+      <div class="why-body">
+        <h4>אחריות מלאה</h4>
+        <p>אחריות על עבודה וחלפים לתקופה ארוכה</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT BENNY ═══ -->
+<section class="about" id="about">
+  <div class="about-container">
+    <div class="about-text reveal">
+      <div class="section-label" style="text-align: right; margin-bottom: 8px;">הפנים שמאחורי הקירור</div>
+      <h2>נעים מאוד, אני <span>בני הדר</span></h2>
+      <p>כבר למעלה מ-30 שנה שאני חי ונושם את תחום מיזוג האוויר. עבורי, "מיזוג נטו" זה לא רק שם של פרוייקט או עסק – זו הבטחה לשירות שקוף, אמינות לא מתפשרת, ועבודה יסודית עד הפרט האחרון בלי הפתעות ובלי "עגלות מעשנות".</p>
+      <p>הקמתי את העסק באמונה שכל לקוח – מדירה קטנה ועד בניין משרדים אדיר – חולק את אותה מטרה: פתרון מיזוג שקט ומושלם שיעבוד שנים ארוכות. אני עונה לאתגר הזה תמיד באופן אישי, החל מרגע אפיון הבית שלכם, דרך הצעת המחיר, ועד שאנחנו מהדקים את הברגים האחרונים.</p>
+      <ul>
+        <li>יחס טלפוני ואישי תמיד ישירות מולי</li>
+        <li>שקיפות מלאה גם מעבר למחירון</li>
+        <li>חשיבה יצירתית לפתרון סגירת מיזוג אסתטי</li>
+        <li>פיקוח צמוד בשטח של העבודה ושל עובדי</li>
+      </ul>
+      <div class="about-sig">שלכם, בני 👋</div>
+    </div>
+    
+    <div class="about-img reveal">
+      <div class="about-img-box">
+        <div class="about-img-inner">
+          <img src="pics/profile.png" alt="בני הדר - מתקין מזגנים מומחה" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section class="gallery" id="gallery">
+  <div class="section-label">עבודות שלנו</div>
+  <div class="section-title reveal">
+    <h2>מהשטח</h2>
+    <p>פרויקטים אמיתיים שביצענו ברחבי הארץ</p>
+    <div class="section-line"></div>
+  </div>
+  <div class="gallery-grid">
+
+    <div class="gallery-item gallery-wide reveal" data-src="photo1">
+      <div class="gallery-ph gallery-ph-1">
+        <div class="gallery-ph-icon">🏗️</div>
+        <div class="gallery-ph-label">ביצוע מערכת VRF – תיעול וצינורות</div>
+      </div>
+      <div class="gallery-overlay"><span>מערכת VRF מסחרית</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-src="photo2">
+      <div class="gallery-ph gallery-ph-2">
+        <div class="gallery-ph-icon">❄️</div>
+        <div class="gallery-ph-label">יחידות גג – התקנה חיצונית</div>
+      </div>
+      <div class="gallery-overlay"><span>יחידות גג</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-src="photo3">
+      <div class="gallery-ph gallery-ph-3">
+        <div class="gallery-ph-icon">🔧</div>
+        <div class="gallery-ph-label">עבודות גבס – גימור מקצועי</div>
+      </div>
+      <div class="gallery-overlay"><span>עבודות גבס</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-src="photo4">
+      <div class="gallery-ph gallery-ph-4">
+        <div class="gallery-ph-icon">🏢</div>
+        <div class="gallery-ph-label">התקנה מסחרית – בניין משרדים</div>
+      </div>
+      <div class="gallery-overlay"><span>התקנה מסחרית</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-src="photo5">
+      <div class="gallery-ph gallery-ph-5">
+        <div class="gallery-ph-icon">⚡</div>
+        <div class="gallery-ph-label">חדר מיזוג – מערכת מרכזית</div>
+      </div>
+      <div class="gallery-overlay"><span>מערכת מרכזית</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">✕</button>
+  <img id="lightbox-img" src="" alt="תמונה מהשטח"/>
+</div>
+
+<!-- ═══ PROCESS ═══ -->
+<section class="process" id="process">
+  <div class="section-label">איך עובדים איתנו</div>
+  <div class="section-title reveal">
+    <h2>תהליך עבודה פשוט וברור</h2>
+    <p>מהפגישה הראשונה ועד מפתח ביד</p>
+    <div class="section-line"></div>
+  </div>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>פגישת ייעוץ חינם</h4>
+        <p>מגיעים אליכם לביקור בית, מקשיבים לצרכים ומעריכים את הנכס. ללא עלות וללא התחייבות.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>תכנון והצעת מחיר</h4>
+        <p>מכינים תוכנית מותאמת אישית עם הצעת מחיר שקופה ומפורטת – אין הפתעות בהמשך.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>התקנה מקצועית</h4>
+        <p>צוות מוסמך מבצע את ההתקנה כולל עבודות גבס, ניקוי מלא ועמידה בלוחות הזמנים.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>בדיקה והדרכה</h4>
+        <p>בדיקת מערכת מקיפה, הדרכה על השימוש ומסירת אחריות. נשארים זמינים לכל שאלה.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="contact" id="contact">
+  <div class="section-label">דברו איתנו</div>
+  <div class="section-title reveal">
+    <h2>יצירת קשר מהירה</h2>
+    <p>אנו זמינים עבורכם לכל שאלה, ייעוץ או קריאת שירות</p>
+    <div class="section-line"></div>
+  </div>
+  
+  <div class="contact-actions reveal" style="text-align: center; display: flex; flex-direction: column; gap: 24px; align-items: center; justify-content: center; max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.7); backdrop-filter: blur(28px) saturate(180%); -webkit-backdrop-filter: blur(28px) saturate(180%); border: 1px solid rgba(56,182,255,0.25); border-radius: 24px; padding: 48px 32px; box-shadow: 0 20px 64px rgba(10,132,208,0.12);">
+    <p style="font-size: 1.15rem; color: var(--navy-mid); line-height: 1.6;">
+      לקבלת מענה מהיר במיוחד, השאירו הודעה בוואטסאפ או חייגו אלינו ישירות. בני והצוות ישמחו לעמוד לשירותכם.
+    </p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; width: 100%;">
+      <a href="https://wa.me/972528815133?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%91%D7%A0%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%95%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%99%D7%96%D7%95%D7%92%20%D7%90%D7%95%D7%95%D7%99%D7%A8." target="_blank" rel="noopener" class="btn-primary" style="background: linear-gradient(135deg, #128C7E, #25D366); box-shadow: 0 6px 28px rgba(37,211,102,0.35); flex: 1; min-width: 240px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+        <img src="pics/whatsapp-svgrepo-com.svg" alt="" width="22" height="22" style="position: relative; z-index: 1;">שלח הודעת וואטסאפ
+      </a>
+      <a href="tel:0528815133" class="btn-primary" style="background: linear-gradient(135deg, var(--navy), var(--navy-mid)); box-shadow: 0 6px 28px rgba(12,35,64,0.35); flex: 1; min-width: 240px; text-align: center;">
+        📞 חייג אלינו: 052-8815133
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>© 2026 <strong>מיזוג נטו</strong> – רשת סוכנים למיזוג אוויר | בני הדר | כל הזכויות שמורות</p>
+  <div style="margin-top: 12px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+    <a href="#" onclick="openModal('accessibilityModal'); return false;" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; transition: color 0.2s;">הצהרת נגישות</a>
+    <a href="#" onclick="openModal('termsModal'); return false;" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; transition: color 0.2s;">תנאי שימוש</a>
+    <a href="#" onclick="openModal('privacyModal'); return false;" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; transition: color 0.2s;">מדיניות פרטיות</a>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════
+   BG – cool breeze wind streams
+════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx    = canvas.getContext('2d');
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
+  let W, H, streams;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    initStreams();
+  }
+  function mkStream(){
+    return {
+      y:      Math.random() * H,
+      offset: Math.random() * Math.PI * 2,
+      speed:  0.18 + Math.random() * 0.42,
+      amp:    15 + Math.random() * 40,
+      freq:   0.003 + Math.random() * 0.005,
+      color:  Math.random() > 0.5 ? '#38b6ff' : '#0caa6e',
+      alpha:  (isMobile ? 0.14 : 0.06) + Math.random() * (isMobile ? 0.16 : 0.10),
+      width:  (isMobile ? 1.2 : 0.6) + Math.random() * (isMobile ? 1.4 : 1.0),
+      t:      Math.random() * 200
+    };
+  }
+  function initStreams(){
+    const n = Math.min(Math.floor(H / 36), isMobile ? 20 : 32);
+    streams = Array.from({length: n}, mkStream);
+  }
+  function animate(){
+    ctx.clearRect(0, 0, W, H);
+    streams.forEach(s => {
+      s.t += s.speed;
+      ctx.beginPath();
+      for(let x = 0; x <= W; x += 6){
+        const y = s.y + s.amp * Math.sin(s.freq * x - s.t * 0.045 + s.offset);
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = s.color;
+      ctx.globalAlpha  = s.alpha;
+      ctx.lineWidth    = s.width;
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+  if(document.readyState==='complete'){ resize(); animate(); }
+  else window.addEventListener('load', ()=>{ resize(); animate(); });
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', ()=>setTimeout(resize,300));
+})();
+
+/* ════════════════════════════════════════
+   HERO canvas – snowflakes drifting on breeze
+════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
+  let W, H, flakes, streams;
+
+  function resize(){
+    // Use parentElement dimensions; fall back to window
+    const parent = canvas.parentElement;
+    W = canvas.width  = (parent && parent.offsetWidth  > 0) ? parent.offsetWidth  : window.innerWidth;
+    H = canvas.height = (parent && parent.offsetHeight > 0) ? parent.offsetHeight : window.innerHeight;
+    // Last resort
+    if(!W || W < 10) { W = canvas.width  = window.innerWidth; }
+    if(!H || H < 10) { H = canvas.height = window.innerHeight; }
+    init();
+  }
+
+  function mkFlake(){
+    return {
+      x:      Math.random() * W,
+      y:      Math.random() * H,
+      size:   (isMobile ? 5 : 3) + Math.random() * (isMobile ? 10 : 9),
+      alpha:  (isMobile ? 0.20 : 0.12) + Math.random() * 0.35,
+      rot:    Math.random() * Math.PI * 2,
+      rotV:   (Math.random() - 0.5) * 0.012,
+      vx:     0.25 + Math.random() * 0.75,
+      vy:     (Math.random() - 0.5) * 0.18,
+      wobble: Math.random() * Math.PI * 2,
+      wobbleS:0.018 + Math.random() * 0.025,
+      color:  Math.random() > 0.35 ? '#5ec8f8' : '#c8eeff'
+    };
+  }
+  function mkStream(){
+    return {
+      y:      Math.random() * H,
+      offset: Math.random() * Math.PI * 2,
+      speed:  0.25 + Math.random() * 0.5,
+      amp:    8 + Math.random() * 22,
+      freq:   0.007 + Math.random() * 0.009,
+      alpha:  (isMobile ? 0.18 : 0.08) + Math.random() * (isMobile ? 0.18 : 0.10),
+      width:  isMobile ? 1.5 : 0.8,
+      t:      Math.random() * 100
+    };
+  }
+
+  function init(){
+    const n = Math.min(Math.floor(W * H / (isMobile ? 14000 : 10000)), isMobile ? 25 : 45);
+    flakes  = Array.from({length: n}, mkFlake);
+    streams = Array.from({length: isMobile ? 5 : 7}, mkStream);
+  }
+
+  function drawFlake(f){
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.rotate(f.rot);
+    ctx.globalAlpha = f.alpha;
+    ctx.strokeStyle = f.color;
+    ctx.lineWidth   = isMobile ? 1.5 : 1;
+    const s = f.size;
+    for(let i = 0; i < 6; i++){
+      const a = (Math.PI / 3) * i;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(Math.cos(a) * s, Math.sin(a) * s);
+      ctx.stroke();
+      // side branches
+      const bx = Math.cos(a)*s*0.5, by = Math.sin(a)*s*0.5;
+      const ba = a + Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(bx, by);
+      ctx.lineTo(bx + Math.cos(ba)*s*0.30, by + Math.sin(ba)*s*0.30);
+      ctx.moveTo(bx, by);
+      ctx.lineTo(bx - Math.cos(ba)*s*0.30, by - Math.sin(ba)*s*0.30);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function animate(){
+    ctx.clearRect(0, 0, W, H);
+
+    streams.forEach(s => {
+      s.t += s.speed;
+      ctx.beginPath();
+      for(let x = 0; x <= W; x += 6){
+        const y = s.y + s.amp * Math.sin(s.freq * x - s.t * 0.05 + s.offset);
+        x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle = '#5ec8f8';
+      ctx.globalAlpha = s.alpha;
+      ctx.lineWidth   = s.width;
+      ctx.stroke();
+    });
+
+    flakes.forEach(f => {
+      f.wobble += f.wobbleS;
+      f.x += f.vx + 0.4 * Math.sin(f.wobble);
+      f.y += f.vy;
+      f.rot += f.rotV;
+      if(f.x > W + 20){ f.x = -20; f.y = Math.random() * H; }
+      if(f.y < -20)  f.y = H + 20;
+      if(f.y > H+20) f.y = -20;
+      drawFlake(f);
+    });
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+
+  function start(){
+    resize();
+    animate();
+    // Re-check size after 300ms in case mobile layout shifted
+    setTimeout(()=>{ resize(); }, 300);
+  }
+
+  if(document.readyState==='complete'){ start(); }
+  else window.addEventListener('load', start);
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', ()=>setTimeout(resize, 400));
+})();
+
+/* ════ COUNTER ANIMATION ════ */
+function runCounters(){
+  document.querySelectorAll('.stat-num[data-target]').forEach(function(el, i){
+    setTimeout(function(){ el.classList.add('pop-in'); }, i * 120);
+  });
+}
+
+/* ════ SCROLL REVEAL ════ */
+function setupAnimations(){
+  document.body.classList.add('js-ready');
+  function checkEl(el){
+    var r = el.getBoundingClientRect();
+    return r.top < window.innerHeight + 120;
+  }
+  function revealVisible(){
+    document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){ if(checkEl(el)) el.classList.add('visible'); });
+    document.querySelectorAll('.step:not(.visible)').forEach(function(el,i){ if(checkEl(el)) setTimeout(function(){ el.classList.add('visible'); }, i*80); });
+  }
+  revealVisible();
+  window.addEventListener('scroll',   revealVisible, {passive:true});
+  window.addEventListener('touchmove', revealVisible, {passive:true});
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+    document.querySelectorAll('.step').forEach(function(el){ el.classList.add('visible'); });
+  }, 2000);
+}
+
+function startEverything(){
+  setupAnimations();
+  setTimeout(runCounters, 400);
+}
+
+if(document.readyState === 'complete'){ startEverything(); }
+else { window.addEventListener('load', startEverything); }
+
+// Fallback: 3s from script execution
+setTimeout(runCounters, 3000);
+
+/* ════ GALLERY LIGHTBOX ════ */
+document.querySelectorAll('.gallery-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    if(img){
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+  });
+});
+
+/* ════ HAMBURGER ════ */
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMenu(){
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+window.addEventListener('scroll',closeMenu);
+
+/* ════ FORM SUBMIT - REMOVED ════ */
+/* Form was replaced with direct call/whatsapp actions */
+</script>
+
+<!-- ═══ LEGAL MODALS ═══ -->
+<style>
+  .legal-modal {
+    display: none; position: fixed; inset: 0; background: rgba(10,35,64,0.85); backdrop-filter: blur(8px);
+    z-index: 9999; align-items: center; justify-content: center; padding: 20px;
+  }
+  .legal-modal.open { display: flex; }
+  .legal-content {
+    background: #fff; border-radius: 16px; max-width: 700px; width: 100%; max-height: 85vh; 
+    overflow-y: auto; padding: 40px; position: relative; color: var(--navy);
+  }
+  .legal-content h2 { margin-bottom: 20px; color: var(--navy); }
+  .legal-content p, .legal-content li { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .legal-content ul { padding-right: 20px; margin-bottom: 12px; }
+  .legal-close {
+    position: absolute; top: 16px; left: 16px; width: 32px; height: 32px;
+    background: var(--bg2); border: none; border-radius: 50%; color: var(--navy);
+    font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .legal-close:hover { background: var(--blue-pale); }
+</style>
+
+<div class="legal-modal" id="accessibilityModal">
+  <div class="legal-content">
+    <button class="legal-close" onclick="closeModal('accessibilityModal')">✕</button>
+    <h2>הצהרת נגישות</h2>
+    <p>אנחנו ב"מיזוג נטו" רואים חשיבות רבה במתן שירות שוויוני, מכובד ונגיש לכלל הלקוחות, כולל אנשים עם מוגבלויות. אתר זה הונגש במטרה לאפשר גלישה נוחה וקלה לכולם.</p>
+    <p><strong>הנגשת האתר:</strong><br/>האתר תוכנן והותאם לעמידה בתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), תשע"ג-2013, ברמת התקן AA של W3C.</p>
+    <p><strong>אמצעי הנגישות באתר:</strong><br/>- תמיכה בניווט מקלדת המאפשרת מעבר בין אלמנטים.<br/>- התאמה לקוראי מסך.<br/>- כפתור נגישות ייעודי המאפשר שינוי גודל גופן, שינוי ניגודיות, ועוד אמצעי עזר שונים.</p>
+    <p><strong>יצירת קשר:</strong><br/>אם נתקלתם בבעיית נגישות באתר, נשמח אם תפנו אלינו כדי שנוכל לתקן את התקלה ולהשתפר. ממונה נגישות: בני הדר, טלפון: 052-8815133.</p>
+  </div>
+</div>
+
+<div class="legal-modal" id="termsModal">
+  <div class="legal-content">
+    <button class="legal-close" onclick="closeModal('termsModal')">✕</button>
+    <h2>תנאי שימוש באתר</h2>
+    <p>ברוכים הבאים לאתר "מיזוג נטו" (להלן: "האתר"). השימוש באתר כפוף לתנאים המפורטים להלן. גלישה באתר מעידה על הסכמתך לתנאים אלו.</p>
+    <p><strong>1. כללי:</strong> הכתוב בתקנון זה בלשון זכר מטעמי נוחות בלבד והוא מתייחס לשני המינים. האתר משמש כמקור מידע ופלטפורמה ליצירת קשר לשירותי התקנה ואחזקת מזגנים.</p>
+    <p><strong>2. המידע באתר:</strong> התמונות, המפרטים, ומחירי השירות (במידה וישנם) באתר נועדו להמחשה ולמתן מידע כללי בלבד. התאמה ספציפית של מערכת מיזוג דורשת ייעוץ פרטני ולכן בעלי האתר לא יישאו באחריות על החלטות שיתקבלו אך ורק על בסיס הכתוב באתר.</p>
+    <p><strong>3. קניין רוחני:</strong> כל זכויות הקניין הרוחני באתר – לרבות העיצוב, התוכן הפוסטים (אם יש), הלוגו והתמונות – שייכות ל"מיזוג נטו". אין להעתיק, לשכפל או להפיץ מידע מהאתר ללא אישור מראש ובכתב.</p>
+    <p><strong>4. טעויות ושגיאות:</strong> בעלת האתר עושה מאמצים רבים להציג את המידע בצורה מדוייקת, אך ייתכנו אי-דיוקים. בכל מקרה של סתירה, המידע שיימסר ללקוח בפועל ובאופן אישי יספק את ההסכם הסופי והקובע.</p>
+    <p><strong>5. הגבלת אחריות:</strong> החברה אינה אחראית לנזקים עקיפים או ישירים שעלולים להיגרם כתוצאה משימוש באתר או כתוצאה מנפילת שרתי האתר מסיבות שונות.</p>
+    <p><strong>6. עדכונים:</strong> הנהלת האתר רשאית לשנות או לתקן את תנאי השימוש מעת לעת ללא הודעה מוקדמת מראש.</p>
+  </div>
+</div>
+
+<div class="legal-modal" id="privacyModal">
+  <div class="legal-content">
+    <button class="legal-close" onclick="closeModal('privacyModal')">✕</button>
+    <h2>מדיניות פרטיות</h2>
+    <p>אנו ב"מיזוג נטו" מכבדים את פרטיות הלקוחות והגולשים באתר (להלן: "האתר"). מדיניות פרטיות זו מפרטת איזה מידע אנו אוספים וכיצד אנו עושים בו שימוש.</p>
+    <p><strong>איסוף מידע:</strong> בלחיצה על יצירת קשר והעברה לשיחת וואטסאפ או חיוג, אנו עשויים לשמור את מספר הטלפון והשם שלכם (במידה ותמסרו לנו) לצורך מתן השירות המבוקש והמשך התקשרות הנוגעת להצעת המחיר או העבודה.</p>
+    <p><strong>שימוש במידע:</strong> המידע האישי שלכם (כמו טלפון ושם) משמש אך ורק למתן שירות, הצעות מחיר, מענה לפניות מקצועיות, ולשמירת קשר בלבד. אנחנו מתחייבים לא להעביר או למכור את פרטיכם האישיים לצדדים שלישיים ללא אישורכם המפורש, למעט מקרים בהם נידרש לכך על פי חוק (כגון צו בית משפט).</p>
+    <p><strong>עוגיות (Cookies):</strong> האתר עשוי להשתמש בעוגיות לצורך תפעולו השוטף והתקין, כגון שיפור חוויית המשתמש ואבטחת האתר, וכן לשם איסוף מידע סטטיסטי אודות אופן השימוש בו. רוב הדפדפנים מאפשרים לחסום או למחוק עוגיות אם רצונכם בכך בהגדרות הדפדפן.</p>
+    <p><strong>אבטחת מידע:</strong> אנו נוקטים באמצעי זהירות מקובלים כדי לשמור על האתר בטוח ולהגן על המידע שלכם, אולם אין לראות בכך אבטחה של 100%, כי אין ביכולתנו להבטיח אבטחה מוחלטת של מידע המועבר ברשת האינטרנט.</p>
+    <p><strong>פניות:</strong> ניתן לפנות אלינו בכל עת לקבלת עותק של המידע הנשמר עליכם אצלנו או לבקש למוחקו.</p>
+  </div>
+</div>
+
+<script>
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  document.querySelectorAll('.legal-modal').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+      if(e.target === this) this.classList.remove('open');
+    });
+  });
+</script>
+
+<!-- ═══ CUSTOM ACCESSIBILITY WIDGET ═══ -->
+<style>
+  .a11y-widget { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 99999; }
+  .a11y-btn {
+    width: 52px; height: 52px; border-radius: 50%; background: var(--blue); color: #fff;
+    font-size: 28px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25); border: 2px solid #fff;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .a11y-btn:hover { transform: scale(1.08); background: var(--navy); }
+  .a11y-menu {
+    position: absolute; bottom: auto; top: 65px; left: 0; background: #fff; border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2); width: 240px; padding: 18px;
+    display: none; flex-direction: column; gap: 10px; border: 1px solid rgba(10,132,208,0.15);
+  }
+  .a11y-menu.open { display: flex; }
+  .a11y-menu-title { font-size: 1.1rem; font-weight: 800; color: var(--navy); text-align: center; border-bottom: 2px solid #f0fbff; padding-bottom: 10px; margin-bottom: 6px; }
+  .a11y-menu button {
+    background: var(--bg); border: 1px solid rgba(10,132,208,0.2); border-radius: 8px;
+    padding: 10px; font-family: 'Heebo', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--navy);
+    cursor: pointer; transition: background 0.2s, transform 0.1s; text-align: right;
+  }
+  .a11y-menu button:hover { background: var(--blue-pale); transform: translateX(-3px); }
+  
+  /* A11Y Classes */
+  body.a11y-high-contrast {
+    --bg: #121212 !important; --bg2: #000000 !important; --white: #000 !important;
+    --navy: #ffffff !important; --navy-mid: #dddddd !important; --text: #ffffff !important;
+    --muted: #bbbbbb !important; --blue: #38b6ff !important; --green: #34d399 !important;
+    background: #121212 !important; color: #ffffff !important;
+  }
+  body.a11y-high-contrast .card, body.a11y-high-contrast section, body.a11y-high-contrast .why-item, body.a11y-high-contrast .contact-actions, body.a11y-high-contrast .legal-content {
+    background: #000000 !important; border-color: #ffffff !important; color: #ffffff !important;
+  }
+  body.a11y-high-contrast p, body.a11y-high-contrast h1, body.a11y-high-contrast h2, body.a11y-high-contrast h3, body.a11y-high-contrast h4 { color: #ffffff !important; }
+  body.a11y-grayscale { filter: grayscale(100%) !important; }
+  body.a11y-links-highlight a { text-decoration: underline !important; background: #ffff00 !important; color: #000000 !important; font-weight: 900 !important; padding: 0 4px; border-radius: 4px; }
+
+  /* ═══ FLOATING WHATSAPP FAB ═══ */
+  .wa-fab {
+    position: fixed; right: 20px; bottom: 20px; z-index: 99999;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, #128C7E, #25D366);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45); border: 2px solid #fff;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+  }
+  .wa-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+  .wa-fab img { width: 30px; height: 30px; }
+  @media(max-width: 600px) {
+    .a11y-menu { top: auto; bottom: 65px; }
+  }
+</style>
+
+<div class="a11y-widget">
+  <div class="a11y-menu" id="a11yMenu">
+    <div class="a11y-menu-title">שירותי נגישות ♿</div>
+    <button onclick="a11yChangeFontSize(1)">A+ הגדל טקסט</button>
+    <button onclick="a11yChangeFontSize(-1)">A- הקטן טקסט</button>
+    <button onclick="document.body.classList.toggle('a11y-high-contrast')">◐ ניגודיות גבוהה</button>
+    <button onclick="document.body.classList.toggle('a11y-grayscale')">◧ גווני אפור</button>
+    <button onclick="document.body.classList.toggle('a11y-links-highlight')">↬ הדגשת קישורים</button>
+    <button onclick="a11yReset()" style="background: #ffe5e5; color: #d32f2f; margin-top: 5px; border-color: #ffcccc;">↺ איפוס נגישות</button>
+  </div>
+  <div class="a11y-btn" onclick="document.getElementById('a11yMenu').classList.toggle('open')" title="פתח תפריט נגישות"><img src="pics/accessibility-svgrepo-com.svg" alt="נגישות" width="28" height="28" style="filter: brightness(10);"></div>
+</div>
+
+<!-- ═══ FLOATING WHATSAPP BUTTON ═══ -->
+<a href="https://wa.me/972528815133?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%91%D7%A0%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%95%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%99%D7%96%D7%95%D7%92%20%D7%90%D7%95%D7%95%D7%99%D7%A8." target="_blank" rel="noopener" class="wa-fab" title="שלח הודעה בוואטסאפ">
+  <img src="pics/whatsapp-svgrepo-com.svg" alt="וואטסאפ">
+</a>
+
+<script>
+  let a11yFontSize = 100;
+  function a11yChangeFontSize(step) {
+    a11yFontSize += step * 10;
+    // Limit font size scaling between 80% and 150%
+    if(a11yFontSize > 150) a11yFontSize = 150;
+    if(a11yFontSize < 80) a11yFontSize = 80;
+    document.documentElement.style.fontSize = a11yFontSize + '%';
+  }
+  function a11yReset() {
+    a11yFontSize = 100;
+    document.documentElement.style.fontSize = '100%';
+    document.body.classList.remove('a11y-high-contrast', 'a11y-grayscale', 'a11y-links-highlight');
+  }
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const widget = document.querySelector('.a11y-widget');
+    if (!widget.contains(event.target)) {
+      document.getElementById('a11yMenu').classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
