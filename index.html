@@ -347,58 +347,55 @@
     /* ═══ REVIEWS ═══ */
     .reviews { background: linear-gradient(160deg, var(--blue-pale), var(--green-pale)); }
     .reviews-top {
-      display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: center;
+      display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: center;
       background: rgba(255,255,255,0.75); backdrop-filter: blur(16px);
       border: 1px solid rgba(56,182,255,0.2); border-radius: 24px;
-      padding: 28px 32px; margin-bottom: 40px; max-width: 780px; margin-inline: auto;
+      padding: 24px 28px; margin-bottom: 40px; max-width: 780px; margin-inline: auto;
       box-shadow: 0 8px 32px rgba(10,132,208,0.1);
     }
-    .reviews-score {
-      text-align: center; border-left: 2px solid rgba(10,132,208,0.12);
-      padding-left: 28px; margin-left: 4px;
-    }
-    .reviews-score .score-num { font-size: 3.2rem; font-weight: 900; color: var(--navy); line-height: 1; }
-    .reviews-score .score-stars { color: #f59e0b; font-size: 1.3rem; letter-spacing: 2px; margin: 4px 0; }
-    .reviews-score .score-label { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
-    .reviews-bars { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 12px; }
-    .bar-row { display: flex; align-items: center; gap: 10px; }
-    .bar-label { font-size: 0.82rem; font-weight: 700; color: var(--navy-mid); white-space: nowrap; min-width: 96px; text-align: right; }
+    .reviews-score { text-align: center; border-left: 2px solid rgba(10,132,208,0.12); padding-left: 24px; }
+    .reviews-score .score-num { font-size: 3rem; font-weight: 900; color: var(--navy); line-height: 1; }
+    .reviews-score .score-stars { color: #f59e0b; font-size: 1.2rem; letter-spacing: 2px; margin: 4px 0; }
+    .reviews-score .score-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+    .reviews-bars { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 12px; }
+    .bar-row { display: flex; align-items: center; gap: 8px; }
+    .bar-label { font-size: 0.8rem; font-weight: 700; color: var(--navy-mid); white-space: nowrap; min-width: 80px; text-align: right; }
     .bar-track { flex: 1; height: 8px; background: rgba(10,132,208,0.12); border-radius: 99px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--blue), var(--green)); }
-    .bar-pct { font-size: 0.8rem; font-weight: 800; color: var(--blue); min-width: 36px; }
-    .reviews-total { text-align: center; padding: 0 12px; }
+    .bar-pct { font-size: 0.8rem; font-weight: 800; color: var(--blue); min-width: 34px; }
+    .reviews-total { text-align: center; padding: 0 8px; }
     .reviews-total .total-num { font-size: 1.8rem; font-weight: 900; color: var(--navy); }
-    .reviews-total .total-label { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
-
+    .reviews-total .total-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+    @media(max-width:600px) {
+      .reviews-score { border-left: none; border-bottom: 2px solid rgba(10,132,208,0.1); padding-left: 0; padding-bottom: 14px; width: 100%; }
+      .reviews-bars { min-width: 100%; }
+      .reviews-total { width: 100%; border-top: 2px solid rgba(10,132,208,0.1); padding-top: 12px; }
+    }
     /* Cards carousel */
-    .reviews-track-wrap { overflow: hidden; position: relative; }
-    .reviews-track-wrap::before, .reviews-track-wrap::after {
-      content: ''; position: absolute; top: 0; height: 100%; width: 60px; z-index: 2; pointer-events: none;
+    .reviews-track-wrap {
+      overflow: hidden; position: relative;
+      -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
     }
-    .reviews-track-wrap::before { left: 0; background: linear-gradient(to right, rgba(240,251,255,0.9), transparent); }
-    .reviews-track-wrap::after  { right: 0; background: linear-gradient(to left,  rgba(240,251,255,0.9), transparent); }
-    .reviews-track {
-      display: flex; gap: 20px; animation: slideReviews 40s linear infinite;
-      width: max-content;
-    }
+    .reviews-track { display: flex; gap: 20px; animation: slideReviews 80s linear infinite; width: max-content; padding: 12px 0; }
     .reviews-track:hover { animation-play-state: paused; }
-    @keyframes slideReviews {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    @keyframes slideReviews { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media(max-width:768px) {
+      .reviews-track-wrap { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; -webkit-mask-image: none; mask-image: none; padding-bottom: 12px; }
+      .reviews-track { animation: none; padding: 4px 16px; }
+      .review-card { scroll-snap-align: start; width: 275px; }
     }
     .review-card {
-      background: rgba(255,255,255,0.9); backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
       border: 1px solid rgba(56,182,255,0.2); border-radius: 20px;
-      padding: 26px 24px; width: 320px; flex-shrink: 0;
-      box-shadow: 0 4px 20px rgba(10,132,208,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: default;
+      padding: 24px 22px; width: 300px; flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(10,132,208,0.08); transition: transform 0.3s, box-shadow 0.3s;
     }
     .review-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(10,132,208,0.16); }
-    .review-stars { color: #f59e0b; font-size: 1rem; letter-spacing: 1px; margin-bottom: 12px; }
-    .review-text { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+    .review-stars { color: #f59e0b; font-size: 1rem; letter-spacing: 1px; margin-bottom: 10px; }
+    .review-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
     .review-author { font-size: 0.85rem; font-weight: 800; color: var(--navy); }
-    .review-date { font-size: 0.75rem; color: var(--blue); font-weight: 600; margin-top: 2px; }
+    .review-date { font-size: 0.73rem; color: var(--blue); font-weight: 600; margin-top: 2px; }
 
     /* ═══ MARQUEE ═══ */
     .clients {
@@ -922,75 +919,28 @@
   <!-- Scrolling cards -->
   <div class="reviews-track-wrap">
     <div class="reviews-track">
-
-      <!-- Set 1 -->
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">השארתי הודעה באתרכם לגבי רצוני בהתקנת מזגן ובני פנה אלי די מהר וגם היה זמין להגיע בהתראה קצרה. בני נתן לי אחלה שירות! הוא עבד בצורה נקייה, מקצועית, יסודית, מהירה, מוקפדת ויעילה. זכיתי להכיר איש מקצוע תותח בתחומו ואני ממליץ עליו באהבה רבה!</p>
-        <div class="review-author">לאוניד, באר שבע</div>
-        <div class="review-date">יולי 2024</div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">בני הגיע ובדק והציע מספר הצעות להתקנת מזגנים נסתרים בסלון. קיבלתי את הצעתו ובני ביצע את העבודה בצורה מקצועית, מדויקת ואיכותית. איש שיחה נעים ומכובד. עמד בכל הבטחותיו. אני ממליץ עליו איש מקצוע במלוא מובן המילה.</p>
-        <div class="review-author">אמנון וסימהקיסר</div>
-        <div class="review-date">אפריל 2024</div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">קיבלתי המלצה על בני מחבר טוב בזמנו ומאז הכל היסטוריה! בני לא רק גובה מחירים שפויים ביחס לשוק אלא גם תמיד מבצע את העבודה בצורה הכי מקצועית, מדויקת, מוקפדת, איכותית וזריזה. לא אחליף אותו בעד אף איש מקצוע אחר!</p>
-        <div class="review-author">ערן, עומר</div>
-        <div class="review-date">אפריל 2024</div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">הזמנתי את בני לצורך התקנת מזגן VRF עם כל עבודות הגבס מסביב ויצאתי מבסוט מאוד. בני מקצוען אמיתי, יסודי, ענייני, מסודר ומאורגן. הוא ביצע את העבודה ברמה הכי גבוהה וגבה מחיר שפוי לגמרי ביחס לשוק. מגיע לו חוות דעת לא פחות ממצויינת!</p>
-        <div class="review-author">גלעד, באר שבע</div>
-        <div class="review-date">אפריל 2024</div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">בני הותיר עלי רושם נפלא! הוא הגיע בדייק במועד שסיכמנו וביצע עבודה מקצועית, זריזה, יעילה ונקייה. סיפק לי מוצר איכותי ושמר על שיח נעים ומכובד. זכיתי להכיר איש מקצוע אלוף בתחומו והייתה זו חווייה נהדרת!</p>
-        <div class="review-author">רוזנה, באר שבע</div>
-        <div class="review-date">יולי 2023</div>
-      </div>
-
-      <!-- Duplicate Set for seamless loop -->
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">השארתי הודעה באתרכם לגבי רצוני בהתקנת מזגן ובני פנה אלי די מהר וגם היה זמין להגיע בהתראה קצרה. בני נתן לי אחלה שירות! הוא עבד בצורה נקייה, מקצועית, יסודית, מהירה, מוקפדת ויעילה. זכיתי להכיר איש מקצוע תותח בתחומו!</p>
-        <div class="review-author">לאוניד, באר שבע</div>
-        <div class="review-date">יולי 2024</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">בני הגיע ובדק והציע מספר הצעות להתקנת מזגנים נסתרים בסלון. קיבלתי את הצעתו ובני ביצע את העבודה בצורה מקצועית, מדויקת ואיכותית. איש שיחה נעים ומכובד. אני ממליץ עליו איש מקצוע במלוא מובן המילה.</p>
-        <div class="review-author">אמנון וסימהקיסר</div>
-        <div class="review-date">אפריל 2024</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">קיבלתי המלצה על בני מחבר טוב בזמנו ומאז הכל היסטוריה! בני לא רק גובה מחירים שפויים אלא גם תמיד מבצע את העבודה בצורה הכי מקצועית. לא אחליף אותו בעד אף איש מקצוע אחר!</p>
-        <div class="review-author">ערן, עומר</div>
-        <div class="review-date">אפריל 2024</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">הזמנתי את בני לצורך התקנת מזגן VRF עם כל עבודות הגבס מסביב ויצאתי מבסוט מאוד. בני מקצוען אמיתי, יסודי, ענייני, מסודר. מגיע לו חוות דעת לא פחות ממצויינת!</p>
-        <div class="review-author">גלעד, באר שבע</div>
-        <div class="review-date">אפריל 2024</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">בני הותיר עלי רושם נפלא! הוא הגיע בדייק במועד שסיכמנו וביצע עבודה מקצועית, זריזה, יעילה ונקייה. סיפק לי מוצר איכותי ושמר על שיח נעים. זכיתי להכיר איש מקצוע אלוף בתחומו והייתה זו חווייה נהדרת!</p>
-        <div class="review-author">רוזנה, באר שבע</div>
-        <div class="review-date">יולי 2023</div>
-      </div>
-
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">השארתי הודעה באתרכם לגבי רצוני בהתקנת מזגן ובני פנה אלי די מהר וגם היה זמין להגיע בהתראה קצרה. בני נתן לי אחלה שירות! הוא עבד בצורה נקייה, מקצועית, יסודית, מהירה, מוקפדת ויעילה ושיתף אותי בתהליך לאורך כל הדרך. זכיתי להכיר איש מקצוע תותח בתחומו ואני ממליץ עליו באהבה רבה!</p><div class="review-author">לאוניד, באר שבע</div><div class="review-date">יולי 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">הוא הגיע ובדק והציע מספר הצעות להתקנת מזגנים נסתרים בסלון. בני הגיע בזמן שנקבע וביצע את העבודה בצורה מקצועית, מדויקת ואיכותית. איש שיחה נעים ומכובד ועמד בכל הבטחותיו. יצאתי מאוד מרוצה מהטיפול. אני ממליץ עליו איש מקצוע במלוא מובן המילה!</p><div class="review-author">אמנון וסימהקיסר</div><div class="review-date">אפריל 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">קיבלתי המלצה על בני מחבר טוב בזמנו ומאז הכל היסטוריה! בני לא רק גובה מחירים שפויים ביחס לשוק אלא גם תמיד מבצע את העבודה בצורה הכי מקצועית, מדויקת, מוקפדת, איכותית וזריזה ושומר על שיח נעים ומכובד. לא אחליף אותו בעד אף איש מקצוע אחר!</p><div class="review-author">ערן, עומר</div><div class="review-date">אפריל 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">הזמנתי אותו לצורך התקנת מזגן VRF עם כל עבודות הגבס מסביב ויצאתי מבסוט מאוד. בני מקצוען אמיתי, יסודי, ענייני, מסודר ומאורגן. ביצע את העבודה ברמה הכי גבוהה וגבה מחיר שפוי לגמרי ביחס לשוק. אין ספק שקיבלתי תוצאה יוצאת מן הכלל!</p><div class="review-author">גלעד, באר שבע</div><div class="review-date">אפריל 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">בני הותיר עלי רושם נפלא! הוא הגיע בדיוק במועד שסיכמנו וביצע עבודה מקצועית, זריזה, יעילה ונקייה. סיפק לי מוצר ממש איכותי ושמר על שיח נעים, ראוי ומכובד לאורך כל הדרך. זכיתי להכיר איש מקצוע אלוף בתחומו, מגיע לו המלצה חמה ביותר!</p><div class="review-author">רוזנה, באר שבע</div><div class="review-date">יולי 2023</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">יצרתי קשר אקראי עם בני דרך האתר לצורך רכישה והתקנת מזגן כולל פירוק הישן. בני היה פשוט מדהים! הגיע יום אחרי ששוחחנו וביצע את העבודה בצורה הכי מקצועית, יעילה, מהירה ונקייה. סיפק לי מוצר איכותי ברמות אחרות וגבה מחיר זול ביחס לשוק!</p><div class="review-author">יורי, באר שבע</div><div class="review-date">יולי 2023</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">אני מכיר את בני באופן אישי כבר הרבה שנים. הזמנתי אותו להתקנת מזגן מיני מרכזי ועילי בכל חדר. בני לא רק גובה מחיר זולים יותר מבעלי מקצוע אחרים אלא גם מבצע את העבודה ברמה הכי גבוהה ועושה מעבר למה שצריך. תענוג להשתמש בשירותיו!</p><div class="review-author">מוטי, באר שבע</div><div class="review-date">מרץ 2023</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">יצרתי קשר עם בני בהמלצת מכרים לצורך התקנת מזגן מיני מרכזי ועילי. בני נתן לי שירות טיפ טופ! מיד נכנס לעניינים וביצע עבודה יסודית, איכותית, מקצועית ונקייה. ניכר שיש לו ניסיון רב בתחום. אין ספק שאקח אותו שוב בפעם הבאה, מגיעות לו רק מחמאות!</p><div class="review-author">אורית, באר שבע</div><div class="review-date">מרץ 2023</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">בני שיחק אותה מכל הבחינות! הזמנתי אותו להתקנת מערכות VRF בביתי כולל מזגן עילי. בני סיפק לי את המוצרים האיכותיים ביותר בשוק, היה קשוב לדרישות שלי וגבה מחיר הוגן לגמרי. הרבה זמן לא נתקלתי בבן אדם כל כך אמין ואחראי כמוהו!</p><div class="review-author">ארי, באר שבע</div><div class="review-date">נובמבר 2022</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">קיבלתי המלצה חמה על בני מבן משפחה והזמנתי אותו להתקנת כמה מזגנים עיליים. בני לא רק נתן הצעת מחיר זולה אלא גם עמד בזמנים והסביר כל צעד שלקח. ביצע עבודה איכותית, מקצועית ונקייה. אין ספק שאקרא לו שוב, אני ממליצה עליו באהבה!</p><div class="review-author">עינב, קריית מלאכי</div><div class="review-date">נובמבר 2022</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">בני איש מקצוע מספר אחד! עשה לי עבודות בכמה בתים שגרתי בהם. המחירים של בני הכי טובים בשוק והוא תמיד עובד מכל הלב ונותן מעצמו מעל ומעבר. בן אדם אמין ביותר. מבחינתי אין לו מתחרים ואני ממליץ עליו לכל מי שיוצא לי לפגוש!</p><div class="review-author">רן, עומר</div><div class="review-date">יולי 2022</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">בני התקין לי מזגן מיני מרכזי והזמנתי אותו בהמלצת חבר. בני לא רק נתן הצעת מחיר סבירה אלא גם ביצע עבודה מושקעת, יסודית, מהירה ועם חיוך על הפנים ומעבר לכך השתמש בכלים איכותיים. לא נתקלתי בבן אדם כל כך טוטאלי, סובלני ומסור כמוהו!</p><div class="review-author">צביקה, מיתר</div><div class="review-date">יולי 2022</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">אני מכיר את בני לא מעט זמן ויכול להגיד עליו רק דברים טובים! התקין לי שני מזגנים מיני מרכזיים ואחד עילי. בני בעל מקצוע עם ראש על הכתפיים, יודע לטפל בבעיות בקלילות וזמין בכל עת גם כשעמוס. מדובר על בן אדם אמין בצורה יוצאת מן הכלל!</p><div class="review-author">גלבוע, עומר</div><div class="review-date">אפריל 2022</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">שמעתי על בני המון דברים טובים מפה לאוזן. הכין את התשתית בצורה מקצועית ביותר וסיפק לי מוצר איכותי ועמיד. קיבלתי שירות ברמה גבוהה ואני ממליץ עליו בלי לחשוב פעמיים ובמלוא מובן המילה!</p><div class="review-author">ניר, באר שבע</div><div class="review-date">אפריל 2022</div></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">השארתי הודעה באתרכם לגבי רצוני בהתקנת מזגן ובני פנה אלי די מהר וגם היה זמין להגיע בהתראה קצרה. בני נתן לי אחלה שירות! הוא עבד בצורה נקייה, מקצועית, יסודית, מהירה, מוקפדת ויעילה ושיתף אותי בתהליך לאורך כל הדרך. זכיתי להכיר איש מקצוע תותח!</p><div class="review-author">לאוניד, באר שבע</div><div class="review-date">יולי 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">הוא הגיע ובדק והציע מספר הצעות להתקנת מזגנים נסתרים בסלון. בני הגיע בזמן שנקבע וביצע את העבודה בצורה מקצועית, מדויקת ואיכותית. איש שיחה נעים ומכובד ועמד בכל הבטחותיו. אני ממליץ עליו איש מקצוע במלוא מובן המילה!</p><div class="review-author">אמנון וסימהקיסר</div><div class="review-date">אפריל 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">קיבלתי המלצה על בני מחבר טוב בזמנו ומאז הכל היסטוריה! בני לא רק גובה מחירים שפויים ביחס לשוק אלא גם תמיד מבצע את העבודה בצורה הכי מקצועית. לא אחליף אותו בעד אף איש מקצוע אחר, פשוט תותח!</p><div class="review-author">ערן, עומר</div><div class="review-date">אפריל 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">הזמנתי אותו לצורך התקנת מזגן VRF עם כל עבודות הגבס מסביב ויצאתי מבסוט מאוד. בני מקצוען אמיתי, יסודי, ענייני, מסודר ומאורגן. ביצע את העבודה ברמה הכי גבוהה. אין ספק שקיבלתי תוצאה יוצאת מן הכלל!</p><div class="review-author">גלעד, באר שבע</div><div class="review-date">אפריל 2024</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">בני הותיר עלי רושם נפלא! הוא הגיע בדיוק במועד שסיכמנו וביצע עבודה מקצועית, זריזה, יעילה ונקייה. סיפק לי מוצר ממש איכותי ושמר על שיח נעים ומכובד. מגיע לו המלצה חמה ביותר!</p><div class="review-author">רוזנה, באר שבע</div><div class="review-date">יולי 2023</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">יצרתי קשר אקראי עם בני דרך האתר. הגיע יום אחרי ששוחחנו וביצע את העבודה בצורה הכי מקצועית, יעילה, מהירה ונקייה. סיפק לי מוצר איכותי ברמות אחרות וגבה מחיר זול ביחס לשוק!</p><div class="review-author">יורי, באר שבע</div><div class="review-date">יולי 2023</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">אני מכיר את בני באופן אישי כבר הרבה שנים. בני לא רק גובה מחירים זולים יותר מבעלי מקצוע אחרים אלא גם מבצע את העבודה ברמה הכי גבוהה ועושה מעבר למה שצריך. תענוג עבורי להשתמש בשירותיו!</p><div class="review-author">מוטי, באר שבע</div><div class="review-date">מרץ 2023</div></div>
     </div>
   </div>
 </section>
