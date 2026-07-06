@@ -607,6 +607,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <img src="/pics/whatsapp-svgrepo-com.svg" alt="וואטסאפ"/>
 </a>
 
+<!-- Conversion tracking (GTM dataLayer) -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  document.addEventListener('click', function(e){{
+    var a = e.target.closest ? e.target.closest('a') : null;
+    if(!a) return;
+    var href = (a.getAttribute('href') || '').toLowerCase();
+    if(href.indexOf('tel:') === 0){{
+      window.dataLayer.push({{ event: 'phone_click',    lead_type: 'phone',    link_url: a.href }});
+      window.dataLayer.push({{ event: 'generate_lead',  lead_type: 'phone',    link_url: a.href }});
+    }} else if(href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1 || href.indexOf('api.whatsapp') !== -1){{
+      window.dataLayer.push({{ event: 'whatsapp_click', lead_type: 'whatsapp', link_url: a.href }});
+      window.dataLayer.push({{ event: 'generate_lead',  lead_type: 'whatsapp', link_url: a.href }});
+    }}
+  }}, true);
+</script>
+
 </body>
 </html>
 '''
