@@ -1,0 +1,475 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Generator for מיזוג נטו local/service SEO landing pages.
+Run:  python3 scripts/gen_seo_pages.py
+Produces standalone HTML pages at the repo root and updates sitemap.xml.
+"""
+import os
+import urllib.parse
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_URL = "https://mizug-neto.co.il"
+PHONE_DISPLAY = "052-8815133"
+PHONE_TEL = "0528815133"
+WA_NUMBER = "972528815133"
+TODAY = "2026-07-06"
+
+
+def wa_link(msg):
+    return f"https://wa.me/{WA_NUMBER}?text=" + urllib.parse.quote(msg)
+
+
+# ─── Page data ───────────────────────────────────────────────
+LOCATIONS = [
+    {
+        "slug": "מתקין-מזגנים-באר-שבע",
+        "city": "באר שבע",
+        "prep": "בבאר שבע",
+        "intro": [
+            "מחפשים מתקין מזגנים מקצועי בבאר שבע? מיזוג נטו, בהנהלת בני הדר, מתמחה במכירה, התקנה והקמת מערכות מיזוג אוויר קומפלט לתושבי באר שבע והשכונות מזה מעל 30 שנה. מהשכונות הוותיקות ועד רמות, נאות לון ופארק הנחל, אנחנו מכירים כל סוג מבנה ויודעים להתאים את הפתרון המדויק.",
+            "אנחנו מתמחים בהתקנת מזגנים עיליים, מערכות מיני מרכזי ומערכות VRF מתקדמות, כולל כל עבודות הגבס תחת קבלן אחד. כל עבודה מתבצעת בצורה נקייה, מדויקת ובעמידה מלאה בלוחות הזמנים, עם הצעת מחיר שקופה מראש וללא הפתעות.",
+        ],
+        "faq": [
+            ("כמה עולה התקנת מזגן בבאר שבע?",
+             "מחיר ההתקנה בבאר שבע נקבע לפי סוג המזגן, אורך הצנרת ומורכבות עבודות הגבס. אנחנו מגיעים לביקור חינם וללא התחייבות ומספקים הצעת מחיר שקופה ומפורטת מראש."),
+            ("האם אתם מגיעים לכל השכונות בבאר שבע?",
+             "כן, אנחנו נותנים שירות בכל שכונות באר שבע, כולל רמות, נאות לון, נווה זאב, פארק הנחל, השכונות הוותיקות והסביבה."),
+            ("כמה זמן לוקחת התקנת מזגן?",
+             "התקנת מזגן עילי בודד אורכת בדרך כלל 3 עד 4 שעות, ומערכת מיני מרכזי או VRF עם גבס עשויה להימשך בין יום לחמישה ימי עבודה בהתאם להיקף."),
+        ],
+    },
+    {
+        "slug": "מתקין-מזגנים-עומר",
+        "city": "עומר",
+        "prep": "בעומר",
+        "intro": [
+            "מיזוג נטו היא הכתובת להתקנת מזגנים בעומר. אנחנו מתקינים מערכות מיזוג אוויר בבתים הפרטיים והווילות של עומר כבר שנים רבות, עם דגש על פתרונות אסתטיים ושקטים שמשתלבים בעיצוב הבית.",
+            "בזכות ההתמחות שלנו במערכות VRF ומיני מרכזי, כולל עבודות גבס להסתרת צנרת, אנחנו מעניקים לתושבי עומר תוצאה מושלמת מקצה לקצה, בליווי אישי של בני הדר לאורך כל התהליך.",
+        ],
+        "faq": [
+            ("אתם מתקינים מזגנים בבתים פרטיים בעומר?",
+             "בהחלט. רוב העבודות שלנו בעומר הן בבתים פרטיים ובווילות, כולל מערכות מיני מרכזי ו-VRF עם הסתרת צנרת מלאה בעבודות גבס."),
+            ("האם ניתן להסתיר את הצנרת והמזגנים?",
+             "כן. אנחנו מבצעים את כל עבודות הגבס בעצמנו, כולל הסתרת צנרת ובניית מסגרות, כדי להשיג מראה נקי ואסתטי בכל חדר."),
+            ("מי מבצע את העבודה בפועל?",
+             "בני הדר מלווה כל פרויקט באופן אישי, מרגע האפיון ועד מסירת המערכת, כדי להבטיח איכות ואמינות מלאה."),
+        ],
+    },
+    {
+        "slug": "מתקין-מזגנים-מיתר",
+        "city": "מיתר",
+        "prep": "במיתר",
+        "intro": [
+            "צריכים מתקין מזגנים במיתר? מיזוג נטו מספקת שירותי התקנה ותכנון מיזוג אוויר לתושבי מיתר, עם ניסיון של מעל 30 שנה ומאות לקוחות מרוצים באזור הדרום.",
+            "אנחנו מתאימים לכל בית את המערכת האידיאלית, מזגן עילי ועד מערכת VRF מלאה, ומבצעים את כל עבודות הגבס והתשתית בעצמנו, לתוצאה נקייה שמחזיקה שנים.",
+        ],
+        "faq": [
+            ("אתם נותנים שירות במיתר?",
+             "כן, מיתר היא חלק מאזור השירות הקבוע שלנו לצד באר שבע, עומר וקריית מלאכי."),
+            ("איזו מערכת מיזוג מתאימה לבית שלי?",
+             "בביקור החינם אנחנו מאפיינים את הבית וממליצים על הפתרון המשתלם ביותר, בין אם מזגן עילי, מיני מרכזי או VRF."),
+            ("האם יש אחריות על ההתקנה?",
+             "כן, אנחנו מעניקים אחריות מלאה על העבודה ועל החלפים לתקופה ארוכה."),
+        ],
+    },
+    {
+        "slug": "מתקין-מזגנים-קריית-מלאכי",
+        "city": "קריית מלאכי",
+        "prep": "בקריית מלאכי",
+        "intro": [
+            "מיזוג נטו מתקינה מזגנים בקריית מלאכי ובסביבה, לאנשים פרטיים ולעסקים. עם מעל 30 שנות ניסיון ובהנהלת בני הדר, אנחנו מספקים שירות מקצועי, אמין ומחירים הוגנים.",
+            "אנחנו מתמחים בהתקנת מזגנים עיליים, מיני מרכזי ומערכות VRF, כולל עבודות גבס מלאות, בעבודה נקייה ומדויקת ובעמידה בלוחות זמנים.",
+        ],
+        "faq": [
+            ("אתם מגיעים לקריית מלאכי?",
+             "כן, קריית מלאכי נמצאת באזור השירות הקבוע שלנו ואנחנו מגיעים אליה באופן שוטף."),
+            ("אפשר לקבל הצעת מחיר לפני התחלת העבודה?",
+             "בהחלט. אנחנו מגיעים לביקור חינם ומספקים הצעת מחיר מפורטת ושקופה מראש, ללא עלויות נסתרות."),
+            ("אתם מתקינים גם לעסקים?",
+             "כן, אנחנו מבצעים התקנות גם לבתים פרטיים וגם לעסקים ומבני מסחר."),
+        ],
+    },
+]
+
+SERVICES = [
+    {
+        "slug": "התקנת-מזגני-vrf",
+        "name": "התקנת מערכות VRF",
+        "h1_extra": "בבאר שבע והדרום",
+        "tag": "הטכנולוגיה המתקדמת ביותר",
+        "intro": [
+            "מערכת VRF (Variable Refrigerant Flow) היא טכנולוגיית המיזוג המתקדמת ביותר כיום. היא מווסתת את זרימת גז הקירור לכל יחידה בנפרד, ומאפשרת בקרה מדויקת, שקט ופעולה חסכונית במיוחד, עם חיסכון של עד 50% בצריכת החשמל לעומת מזגנים ישנים.",
+            "מיזוג נטו מתמחה בתכנון והתקנה של מערכות VRF לבתים פרטיים גדולים, מגדלים, משרדים ומבני מסחר בבאר שבע ובכל אזור הדרום. אנחנו מבצעים את כל עבודות הגבס והתשתית בעצמנו, לתוצאה מושלמת מקצה לקצה.",
+        ],
+        "faq": [
+            ("למי מתאימה מערכת VRF?",
+             "מערכת VRF מתאימה במיוחד לבתים גדולים, מגדלים, משרדים ומבני מסחר שבהם נדרשות מספר יחידות פנימיות עם בקרה מרכזית וחיסכון אנרגטי."),
+            ("כמה חשמל חוסכת מערכת VRF?",
+             "מערכת VRF מודרנית יכולה לחסוך עד 50% בצריכת החשמל בהשוואה למזגנים ישנים, בזכות ויסות חכם של זרימת הגז."),
+            ("ההתקנה כוללת עבודות גבס?",
+             "כן, אנחנו מבצעים את כל עבודות הגבס להסתרת הצנרת והיחידות בעצמנו, תחת קבלן אחד."),
+        ],
+    },
+    {
+        "slug": "התקנת-מזגן-מיני-מרכזי",
+        "name": "התקנת מזגן מיני מרכזי",
+        "h1_extra": "בבאר שבע והדרום",
+        "tag": "מיזוג נסתר ואסתטי",
+        "intro": [
+            "מזגן מיני מרכזי הוא הפתרון האידיאלי למי שרוצה מיזוג אוויר נסתר ואסתטי, שבו היחידה הפנימית מוסתרת מעל תקרת הגבס והאוויר מחולק לחדרים דרך תעלות. התוצאה היא מראה נקי לחלוטין וחלוקת אוויר אחידה.",
+            "מיזוג נטו מתכננת ומתקינה מערכות מיני מרכזי בבאר שבע ובדרום, כולל כל עבודות הגבס, התעלות והמפזרים. אנחנו דואגים לתכנון נכון של נקודות האוויר כדי להבטיח נוחות מקסימלית בכל חדר.",
+        ],
+        "faq": [
+            ("מה ההבדל בין מיני מרכזי למזגן עילי?",
+             "מזגן מיני מרכזי מוסתר מעל תקרת הגבס ומחלק אוויר דרך תעלות למספר חדרים, בעוד מזגן עילי גלוי ומיועד לחדר בודד."),
+            ("האם המערכת כוללת גבס ותעלות?",
+             "כן, אנחנו מבצעים את כל עבודות הגבס, התעלות והמפזרים בעצמנו, לתוצאה נקייה ומושלמת."),
+            ("כמה זמן לוקחת ההתקנה?",
+             "התקנת מערכת מיני מרכזי אורכת בדרך כלל בין יום לכמה ימי עבודה, בהתאם להיקף עבודות הגבס."),
+        ],
+    },
+    {
+        "slug": "מיזוג-קומפלט-לבתים-חדשים",
+        "name": "מיזוג קומפלט לבתים חדשים",
+        "h1_extra": "בבאר שבע והדרום",
+        "tag": "הקמה מלאה מקצה לקצה",
+        "intro": [
+            "בונים בית חדש? מיזוג נטו מתכננת ומקימה מערכות מיזוג אוויר קומפלט לבתים חדשים בבאר שבע ובכל אזור הדרום. אנחנו נכנסים לפרויקט כבר בשלב השלד, פורסים את תשתית הצנרת בתוך הקירות והתקרות, ומבטיחים מערכת נסתרת, שקטה ואסתטית שתשרת אתכם שנים.",
+            "ההקמה כוללת הכל תחת קבלן אחד: תכנון נקודות המיזוג, פריסת צנרת גז וניקוז, עבודות גבס, התקנת היחידות והפעלת המערכת. כך אתם נכנסים לבית מוכן עם מיזוג מושלם, בלי להתרוצץ בין בעלי מקצוע.",
+        ],
+        "faq": [
+            ("מתי כדאי לתכנן את המיזוג בבית חדש?",
+             "הזמן האידיאלי הוא בשלב השלד, לפני הטיח והגבס, כדי שנוכל להטמין את הצנרת בתוך הקירות והתקרות ולהשיג מערכת נסתרת לחלוטין."),
+            ("מה כוללת הקמת מיזוג קומפלט?",
+             "ההקמה כוללת תכנון, פריסת צנרת גז וניקוז, עבודות גבס, התקנת היחידות הפנימיות והחיצוניות והפעלת המערכת, הכל תחת קבלן אחד."),
+            ("אילו מערכות מתאימות לבית חדש?",
+             "לרוב הבתים החדשים מומלצת מערכת מיני מרכזי או VRF, המספקת מיזוג נסתר, שקט וחסכוני בכל חדרי הבית."),
+        ],
+    },
+    {
+        "slug": "מיזוג-אוויר-למוסדות-ועסקים",
+        "name": "מיזוג אוויר למוסדות ועסקים",
+        "h1_extra": "בבאר שבע והדרום",
+        "tag": "פתרונות לעסקים ומוסדות",
+        "intro": [
+            "מיזוג נטו מתמחה בהקמת מערכות מיזוג אוויר לעסקים ומוסדות בבאר שבע ובדרום - משרדים, חנויות, מרפאות, מוסדות חינוך ומבני מסחר. אנחנו מספקים פתרון מלא שמתאים לעומסי שימוש גבוהים ולדרישות של חלל מסחרי.",
+            "בזכות ההתמחות שלנו במערכות VRF עם בקרה מרכזית, אנחנו מאפשרים ניהול מיזוג יעיל וחסכוני לכל אזור בנפרד. ביצענו פרויקטים עבור רשתות ומוסדות מובילים, ותמיד עומדים בלוחות הזמנים ובסטנדרט הגבוה ביותר.",
+        ],
+        "faq": [
+            ("אתם מתקינים מיזוג לעסקים ומוסדות?",
+             "כן, זו אחת ההתמחויות המרכזיות שלנו - הקמת מערכות מיזוג למשרדים, חנויות, מרפאות, מוסדות חינוך ומבני מסחר."),
+            ("איזו מערכת מתאימה לחלל מסחרי?",
+             "לרוב החללים המסחריים מומלצת מערכת VRF עם בקרה מרכזית, המאפשרת שליטה נפרדת בכל אזור וחיסכון אנרגטי משמעותי."),
+            ("אתם עומדים בלוחות זמנים של פרויקט עסקי?",
+             "בהחלט. אנחנו מקפידים על עמידה בלוחות הזמנים המוסכמים ועל עבודה נקייה שאינה משבשת את פעילות העסק."),
+        ],
+    },
+    {
+        "slug": "עבודות-גבס-למיזוג",
+        "name": "עבודות גבס למיזוג אוויר",
+        "h1_extra": "תחת קבלן אחד",
+        "tag": "הכל תחת קורת גג אחת",
+        "intro": [
+            "אחד היתרונות הגדולים של מיזוג נטו הוא שאנחנו מבצעים את כל עבודות הגבס למיזוג בעצמנו, ולא מפנים לקבלן חיצוני. כך אתם חוסכים תיאום מול בעלי מקצוע נוספים ומקבלים אחריות מלאה על התוצאה.",
+            "עבודות הגבס כוללות הסתרת צנרת גז וניקוז, בניית מסגרות ותעלות, התקנת מפזרים ותיעול אסתטי מושלם. הכל מבוצע בעבודה נקייה ומדויקת שמשתלבת בעיצוב הבית או העסק.",
+        ],
+        "faq": [
+            ("למה כדאי שאותו קבלן יבצע גם את הגבס?",
+             "כשאותו צוות מבצע גם את המיזוג וגם את הגבס אתם מקבלים אחריות אחת, תיאום מלא ותוצאה נקייה, בלי להתרוצץ בין בעלי מקצוע."),
+            ("אילו עבודות גבס אתם מבצעים?",
+             "הסתרת צנרת גז וניקוז, בניית מסגרות ותעלות, התקנת מפזרים ותיעול אסתטי, הכל כחלק מההתקנה."),
+            ("העבודה נקייה?",
+             "כן, אנחנו מקפידים על עבודה מסודרת וניקיון מלא של השטח בסיום ההתקנה."),
+        ],
+    },
+]
+
+
+FEATURES = [
+    ("❄️", "התקנת מערכות VRF", "הטכנולוגיה המתקדמת ביותר לבתים, מגדלים ומוסדות."),
+    ("🏢", "מיזוג קומפלט לבתים ומוסדות", "הקמת מערכות מיזוג שלמות מקצה לקצה."),
+    ("🛒", "מכירת מזגנים מכל המותגים", "מכירה והתקנה של כל סוגי המזגנים במחיר הוגן."),
+    ("🏗️", "עבודות גבס כלולות", "הסתרת צנרת ותיעול אסתטי, הכל תחת קבלן אחד."),
+]
+
+STATS = [
+    ("30+", "שנות ניסיון"),
+    ("1500+", "פרויקטים"),
+    ("98%", "שביעות רצון"),
+    ("60", "המלצות"),
+]
+
+
+def build_page(page, all_pages):
+    is_location = "city" in page
+    slug = page["slug"]
+    url = f"{BASE_URL}/{urllib.parse.quote(slug)}"
+
+    if is_location:
+        city = page["city"]
+        prep = page["prep"]
+        h1 = f'מתקין מזגנים <span>{prep}</span>'
+        title = f"מתקין מזגנים {prep} | מיזוג נטו - בני הדר | התקנת VRF ומיני מרכזי"
+        desc = f"מתקין מזגנים מקצועי {prep} - מיזוג נטו בהנהלת בני הדר. התקנה, תכנון ומכירת מזגני VRF ומיני מרכזי, כולל עבודות גבס. מעל 30 שנות ניסיון. חייגו {PHONE_DISPLAY}."
+        keywords = f"מתקין מזגנים {city}, טכנאי מזגנים {city}, התקנת מזגנים {city}, מיזוג אוויר {city}, מזגני VRF {city}, מיני מרכזי {city}, מיזוג נטו {city}"
+        tag = f"⚡ שירות מיזוג אוויר {prep}"
+        hero_p = f"מיזוג נטו בהנהלת בני הדר - מתקין מזגנים מומחה {prep} עם מעל 30 שנות ניסיון. תכנון, התקנה ומכירת מערכות VRF ומיני מרכזי, כולל כל עבודות הגבס."
+        crumb = f"מתקין מזגנים {prep}"
+        wa_msg = f"שלום בני, הגעתי דרך האתר. אשמח לקבל הצעת מחיר להתקנת מזגן {prep}."
+    else:
+        name = page["name"]
+        extra = page.get("h1_extra", "")
+        h1 = f'{name} <span>{extra}</span>' if extra else name
+        title = f"{name} | מיזוג נטו - בני הדר | באר שבע והדרום"
+        desc = f"{name} על ידי מיזוג נטו בהנהלת בני הדר. שירות מקצועי בבאר שבע ובכל אזור הדרום, מעל 30 שנות ניסיון. חייגו {PHONE_DISPLAY}."
+        keywords = f"{name}, {name} באר שבע, {name} בדרום, מיזוג נטו, בני הדר, מתקין מזגנים"
+        tag = f"⚡ {page.get('tag','')}"
+        hero_p = page["intro"][0]
+        crumb = name
+        wa_msg = f"שלום בני, הגעתי דרך האתר. אשמח לקבל הצעת מחיר לגבי {name}."
+
+    wa = wa_link(wa_msg)
+
+    features_html = "\n".join(
+        f'''      <div class="lp-feature"><span class="lp-icon">{ic}</span><h3>{t}</h3><p>{d}</p></div>'''
+        for ic, t, d in FEATURES
+    )
+    stats_html = "\n".join(
+        f'''      <div class="lp-stat"><div class="n">{n}</div><div class="l">{l}</div></div>'''
+        for n, l in STATS
+    )
+    intro_html = "\n".join(f"      <p>{p}</p>" for p in page["intro"])
+    faq_html = "\n".join(
+        f'''      <details><summary>{q}</summary><div class="a">{a}</div></details>'''
+        for q, a in page["faq"]
+    )
+
+    # cross links to all other pages
+    others = [p for p in all_pages if p["slug"] != slug]
+    area_links = "\n".join(
+        f'''      <a href="/{urllib.parse.quote(p["slug"])}">{('מתקין מזגנים ' + p["prep"]) if "city" in p else p["name"]}</a>'''
+        for p in others
+    )
+
+    # FAQ schema
+    faq_schema_items = ",\n".join(
+        '''        {{"@type":"Question","name":"{q}","acceptedAnswer":{{"@type":"Answer","text":"{a}"}}}}'''.format(
+            q=q.replace('"', '\\"'), a=a.replace('"', '\\"')
+        )
+        for q, a in page["faq"]
+    )
+
+    html = f'''<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="/pics/logo.svg"/>
+  <title>{title}</title>
+  <meta name="description" content="{desc}"/>
+  <meta name="keywords" content="{keywords}"/>
+  <meta name="author" content="מיזוג נטו - בני הדר"/>
+  <meta name="robots" content="index, follow, max-image-preview:large"/>
+  <link rel="canonical" href="{url}"/>
+  <meta name="geo.region" content="IL-D"/>
+  <meta name="geo.placename" content="באר שבע, אזור הדרום"/>
+  <meta name="geo.position" content="31.2518;34.7913"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="he_IL"/>
+  <meta property="og:site_name" content="מיזוג נטו"/>
+  <meta property="og:title" content="{title}"/>
+  <meta property="og:description" content="{desc}"/>
+  <meta property="og:url" content="{url}"/>
+  <meta property="og:image" content="{BASE_URL}/pics/profile.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="{title}"/>
+  <meta name="twitter:description" content="{desc}"/>
+  <meta name="twitter:image" content="{BASE_URL}/pics/profile.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap"/>
+  <link rel="stylesheet" href="/assets/landing.css"/>
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@graph": [
+      {{
+        "@type": ["HVACBusiness","LocalBusiness"],
+        "@id": "{BASE_URL}/#business",
+        "name": "מיזוג נטו",
+        "url": "{BASE_URL}/",
+        "telephone": "+{WA_NUMBER}",
+        "image": "{BASE_URL}/pics/profile.png",
+        "priceRange": "\u20aa\u20aa",
+        "areaServed": {{"@type":"AdministrativeArea","name":"אזור הדרום"}},
+        "aggregateRating": {{"@type":"AggregateRating","ratingValue":"9.5","bestRating":"10","reviewCount":"60"}}
+      }},
+      {{
+        "@type": "WebPage",
+        "@id": "{url}#webpage",
+        "url": "{url}",
+        "name": "{title}",
+        "description": "{desc}",
+        "inLanguage": "he-IL",
+        "isPartOf": {{"@id":"{BASE_URL}/#website"}},
+        "about": {{"@id":"{BASE_URL}/#business"}}
+      }},
+      {{
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {{"@type":"ListItem","position":1,"name":"דף הבית","item":"{BASE_URL}/"}},
+          {{"@type":"ListItem","position":2,"name":"{crumb}","item":"{url}"}}
+        ]
+      }},
+      {{
+        "@type": "FAQPage",
+        "mainEntity": [
+{faq_schema_items}
+        ]
+      }}
+    ]
+  }}
+  </script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">דלג לתוכן הראשי</a>
+
+<nav class="lp-nav" aria-label="ניווט">
+  <a href="/" class="lp-brand" aria-label="מיזוג נטו - לדף הבית">
+    <img src="/pics/short logo.svg" alt="מיזוג נטו"/>
+  </a>
+  <a href="{wa}" target="_blank" rel="noopener" class="lp-nav-cta">
+    <img src="/pics/whatsapp-svgrepo-com.svg" alt=""/><span>וואטסאפ</span>
+  </a>
+</nav>
+
+<main id="main">
+
+  <header class="lp-hero">
+    <div class="lp-tag">{tag}</div>
+    <h1>{h1}</h1>
+    <p>{hero_p}</p>
+    <div class="lp-btns">
+      <a href="{wa}" target="_blank" rel="noopener" class="btn-primary"><img src="/pics/whatsapp-svgrepo-com.svg" alt=""/>קבל הצעת מחיר בוואטסאפ</a>
+      <a href="tel:{PHONE_TEL}" class="btn-ghost">📞 {PHONE_DISPLAY}</a>
+    </div>
+    <div class="lp-wrap">
+      <div class="lp-stats">
+{stats_html}
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="lp-wrap lp-prose">
+      <h2 class="lp-h2">{crumb}</h2>
+{intro_html}
+    </div>
+  </section>
+
+  <section style="background:var(--bg2);">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">מה אנחנו מציעים</h2>
+      <div class="lp-features">
+{features_html}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="lp-wrap">
+      <h2 class="lp-h2">שאלות נפוצות</h2>
+      <div class="lp-faq">
+{faq_html}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="lp-wrap">
+      <div class="lp-cta">
+        <h2>מוכנים להתחיל?</h2>
+        <p>ביקור וייעוץ ראשוני חינם וללא התחייבות. דברו עם בני עוד היום.</p>
+        <div class="lp-btns">
+          <a href="{wa}" target="_blank" rel="noopener" class="btn-primary"><img src="/pics/whatsapp-svgrepo-com.svg" alt=""/>שלח הודעת וואטסאפ</a>
+          <a href="tel:{PHONE_TEL}" class="btn-ghost" style="background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.3);">📞 {PHONE_DISPLAY}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-areas">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">אזורי ושירותי מיזוג נוספים</h2>
+      <p class="lp-lead">מיזוג נטו נותנת שירות בכל אזור הדרום. הנה עוד עמודים שיכולים לעניין אתכם:</p>
+      <div class="lp-area-grid">
+        <a href="/">דף הבית - מיזוג נטו</a>
+{area_links}
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="lp-footer">
+  <div class="lp-foot-links">
+    <a href="/">דף הבית</a>
+    <a href="{wa}" target="_blank" rel="noopener">וואטסאפ</a>
+    <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
+  </div>
+  <div>© 2026 מיזוג נטו - בני הדר · מתקין מזגנים מומחה בבאר שבע והדרום · כל הזכויות שמורות</div>
+</footer>
+
+<a href="{wa}" target="_blank" rel="noopener" class="wa-fab" aria-label="שלח הודעה בוואטסאפ">
+  <img src="/pics/whatsapp-svgrepo-com.svg" alt="וואטסאפ"/>
+</a>
+
+</body>
+</html>
+'''
+    return html
+
+
+def main():
+    all_pages = LOCATIONS + SERVICES
+    written = []
+    for page in all_pages:
+        html = build_page(page, all_pages)
+        fname = page["slug"] + ".html"
+        with open(os.path.join(ROOT, fname), "w", encoding="utf-8") as f:
+            f.write(html)
+        written.append(page["slug"])
+        print("wrote", fname)
+
+    # Build sitemap
+    urls = ["/"] + [f'/{urllib.parse.quote(p["slug"])}' for p in all_pages]
+    entries = []
+    for u in urls:
+        loc = BASE_URL + ("/" if u == "/" else u)
+        priority = "1.0" if u == "/" else "0.8"
+        img = ""
+        if u == "/":
+            img = f'''
+    <image:image>
+      <image:loc>{BASE_URL}/pics/profile.png</image:loc>
+      <image:title>בני הדר - מתקין מזגנים מומחה, מיזוג נטו</image:title>
+    </image:image>'''
+        entries.append(f'''  <url>
+    <loc>{loc}</loc>
+    <lastmod>{TODAY}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>{priority}</priority>{img}
+  </url>''')
+    sitemap = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+''' + "\n".join(entries) + "\n</urlset>\n"
+    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write(sitemap)
+    print("wrote sitemap.xml with", len(urls), "urls")
+
+
+if __name__ == "__main__":
+    main()
