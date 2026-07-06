@@ -442,6 +442,15 @@ def build_page(page, all_pages):
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   }})(window,document,'script','dataLayer','GTM-P2C3XGW2');</script>
   <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18303924600"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', 'AW-18303924600');
+  </script>
+  <!-- End Google tag -->
   <link rel="icon" type="image/svg+xml" href="/pics/logo.svg"/>
   <title>{title}</title>
   <meta name="description" content="{desc}"/>
