@@ -451,6 +451,19 @@ def build_page(page, all_pages):
     gtag('config', 'AW-18303924600');
   </script>
   <!-- End Google tag -->
+  <!-- Event snippet for איש קשר conversion -->
+  <script>
+  function gtag_report_conversion(url) {{
+    var callback = function () {{
+      if (typeof(url) != 'undefined') {{ window.location = url; }}
+    }};
+    gtag('event', 'conversion', {{
+        'send_to': 'AW-18303924600/cEmLCI6bnMwcEPjy_pdE',
+        'event_callback': callback
+    }});
+    return false;
+  }}
+  </script>
   <link rel="icon" type="image/svg+xml" href="/pics/logo.svg"/>
   <title>{title}</title>
   <meta name="description" content="{desc}"/>
@@ -626,9 +639,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if(href.indexOf('tel:') === 0){{
       window.dataLayer.push({{ event: 'phone_click',    lead_type: 'phone',    link_url: a.href }});
       window.dataLayer.push({{ event: 'generate_lead',  lead_type: 'phone',    link_url: a.href }});
+      if(typeof gtag_report_conversion === 'function') gtag_report_conversion();
     }} else if(href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1 || href.indexOf('api.whatsapp') !== -1){{
       window.dataLayer.push({{ event: 'whatsapp_click', lead_type: 'whatsapp', link_url: a.href }});
       window.dataLayer.push({{ event: 'generate_lead',  lead_type: 'whatsapp', link_url: a.href }});
+      if(typeof gtag_report_conversion === 'function') gtag_report_conversion();
     }}
   }}, true);
 </script>
